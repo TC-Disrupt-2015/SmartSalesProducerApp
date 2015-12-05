@@ -41,16 +41,46 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
+.controller('ProductsController', function($scope) {
+
+
+  $scope.products = [
+    { title: 'Beer', id: 1 },
+    { title: 'Flan', id: 2 },
+    { title: 'Bread', id: 3 },
+    { title: 'Carrots', id: 4 },
+    { title: 'Leeks', id: 5 },
+    { title: 'Wine', id: 6 }
   ];
+
+  $scope.test = function(){
+    return "controller working";
+  }
+
+  $scope.testVar = "some content";
+
+
+
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
+.controller('productsController', function($scope, $stateParams) {
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
