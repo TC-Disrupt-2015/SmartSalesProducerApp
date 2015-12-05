@@ -52,11 +52,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'server', 'ngCordova'
       }
     })
     .state('app.playlists', {
-      url: '/settings',
+      url: '/homepage',
       views: {
         'menuContent': {
-          templateUrl: 'templates/settings.html',
-          controller: 'PlaylistsCtrl'
+          templateUrl: 'templates/homepage.html',
+          controller: 'HomepageController'
         }
       }
     })
@@ -71,5 +71,5 @@ angular.module('starter', ['ionic', 'starter.controllers', 'server', 'ngCordova'
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/products');
+  $urlRouterProvider.otherwise('/app/homepage');
 });

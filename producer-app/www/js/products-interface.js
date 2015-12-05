@@ -36,17 +36,19 @@ server.factory('productsInterface', ['$http', function($http){
 	productsInterface.uploadImage = function(data, success, error){
 		url = baseUrl + '/:id/upload';
 		method = 'POST';
+
+		params = { 'photos': data.photos};
 	}
 
 	productsInterface.registerProduct = function(data, success, error){
 		url = baseUrl + '/register';
 		method = 'POST';
 
-		params = { 'units' : data.units,
+		params = { 'name': data.name, 
 				   'description' : data.description, 
-				   'name': data.name, 
-				   'tags' : data.tags, 
-				   'photos' : data.photos}
+		 		   'units' : data.units,
+				   'price' : data.price, 
+				   'tags' : data.tags}
 
 		$http(request)
 		.success(function(data, status, headers, config){
