@@ -33,37 +33,39 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   })
 
   .state('app.search', {
-    url: '/search',
+    url: '/profile',
     views: {
       'menuContent': {
-        templateUrl: 'templates/search.html'
+        templateUrl: 'templates/profile.html',
+        controller: ''
       }
     }
   })
 
   .state('app.browse', {
-      url: '/browse',
+      url: '/products',
       views: {
         'menuContent': {
-          templateUrl: 'templates/browse.html'
+          templateUrl: 'templates/products.html',
+          controller: ''
         }
       }
     })
     .state('app.playlists', {
-      url: '/playlists',
+      url: '/settings',
       views: {
         'menuContent': {
-          templateUrl: 'templates/playlists.html',
+          templateUrl: 'templates/settings.html',
           controller: 'PlaylistsCtrl'
         }
       }
     })
 
   .state('app.single', {
-    url: '/playlists/:playlistId',
+    url: '/products/:productId',
     views: {
       'menuContent': {
-        templateUrl: 'templates/playlist.html',
+        templateUrl: 'templates/product.html',
         controller: 'PlaylistCtrl'
       }
     }
