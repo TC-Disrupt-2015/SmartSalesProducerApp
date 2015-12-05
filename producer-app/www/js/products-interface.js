@@ -6,7 +6,8 @@ server.factory('productsInterface', ['$http', function($http){
 	var timeoutLength = 10000;
 	var baseUrl = 'http://smartsales.heroku.com/products',
 		url,
-		method;
+		method,
+		params = {};
 	var request = {
 		    method: method,
 		    url: url,
