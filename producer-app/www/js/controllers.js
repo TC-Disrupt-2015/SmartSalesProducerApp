@@ -41,10 +41,11 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('ProductsController', function($scope, $ionicModal, $timeout) {
+.controller('ProductsController', function($scope, $ionicModal, $timeout, productsInterface) {
 
 
 	$scope.productData = {};
+	$scope.tags = ['food', 'halal', 'meat', 'pork', 'chicken', 'beef', 'lamb', 'vegitables', 'bread', 'baking', 'desert', 'alcohol', 'wine', 'beer', 'ale'];
 
 	$ionicModal.fromTemplateUrl('templates/add-product.html', {
     	scope: $scope
@@ -61,17 +62,16 @@ angular.module('starter.controllers', [])
   	  $scope.modal.show();
   	};
 
-  	
+  	$scope.listProduct = function() { 
+  		console.log($scope.productData);
+  		productsInterface.registerProduct($scope.productData, success, error)	
 
-  	$scope.listProduct = function() {
 
-  	  // Simulate a login delay. Remove this and replace with your login
-  	  // code if using a login system
-  	  $timeout(function() {
-  	    $scope.closeProductModal();
-  	  }, 1000);
-  	};
 
+  		$timeout(function() {
+  		 	$scope.closeProductModal();
+  		}, 1000);
+  	}
 
   $scope.products = [
     { title: 'Beer', id: 1 },
@@ -82,11 +82,9 @@ angular.module('starter.controllers', [])
     { title: 'Wine', id: 6 }
   ];
 
-  $scope.listProduct = function(){
-    return "controller working";
-  }
+ 
 
-  $scope.testVar = "some content";
+
 
 
 

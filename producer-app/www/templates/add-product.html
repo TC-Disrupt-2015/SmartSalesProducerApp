@@ -1,37 +1,58 @@
 <ion-modal-view>
-  <ion-header-bar>
-    <h1 class="title">Add Product</h1>
-    <div class="buttons">
-      <button class="button button-clear" ng-click="closeProductModal()">Close</button>
-    </div>
-  </ion-header-bar>
-  <ion-content>
-    <form ng-submit="listProduct()">
-      <div class="list">
-        <label class="item item-input">
-          <span class="input-label">Product Title</span>
-          <input type="text" ng-model="productData.title">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Description</span>
-          <input type="password" ng-model="productData.description">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Description</span>
-          <input type="password" ng-model="productData.description">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Description</span>
-          <input type="password" ng-model="productData.description">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Description</span>
-          <input type="password" ng-model="productData.description">
-        </label>
-        <label class="item">
-          <button class="button button-full button-outline button-positive" type="submit">Add Product</button>
-        </label>
-      </div>
-    </form>
-  </ion-content>
+	<div class="col col-80 col-offset-10">
+		<ion-header-bar>
+		    <h1 class="title">Add Product</h1>
+		    <div class="buttons">
+		     	<button class="button button-clear" ng-click="closeProductModal()">Close</button>
+		    </div>
+		</ion-header-bar>
+	  </div>
+	  <ion-content>
+	  	<div class="col col-80 col-offset-10">
+		    <form ng-submit="listProduct()">
+		      <div class="list">
+		        <label class="item item-input">
+		         	<span class="input-label">Product Title</span>
+		         	<input type="text" ng-model="productData.title">
+		        </label>
+		        <label class="item item-input">
+		         	<span class="input-label">Description</span>
+		         	<input type="text" ng-model="productData.description">
+		        </label>
+		        <label class="item item-input">
+		         	<span class="input-label">Type</span>
+		          	<input type="text" ng-model="productData.type">
+		        </label>
+		        <label class="item item-input">
+		         	<span class="input-label">Price</span>
+		         	<input type="text" ng-model="productData.price">
+		        </label>
+		        <label class="item item-input">
+		         	<span class="input-label">Quantiy</span>
+		         	<input type="text" ng-model="productData.quantity">
+		        </label>
+		        <div class="list">
+		        	<label class="item item-input item-select">
+			            <div class="input-label">
+			              Product Category
+			            </div>
+		            	<select>
+		              	<option>Vegitables</option>
+		              	<option>Alcohol</option>
+		              	<option>Bread</option>
+		            	</select>
+		          	</label>
+		        </div>
+		        <label class="item item-input">
+		         	<span class="input-label">Image</span>
+		         	<input type="text" ng-model="productData.image">
+		        </label>
+		        <label class="item">
+		          <button class="button button-full button-outline button-positive" type="submit">Add Product</button>
+		        </label>
+		      </div>
+		    </form>
+	    </div>
+	  </ion-content>
+ 
 </ion-modal-view>
