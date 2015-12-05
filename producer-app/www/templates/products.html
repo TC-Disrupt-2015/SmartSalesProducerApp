@@ -1,14 +1,21 @@
 <ion-view view-title="Smart Sales">
   <ion-content class="center">
 
-  	
+  		<div class="row">
+  		  <div class="col col-80 col-offset-10">
+  		  	<button ng-click="openProductModal()" class="button button-full button-outline button-positive">
+  		  	  List Product
+  		  	</button>
+  		  </div>
+  		</div>
 
-		<ion-list>
-	     	<ion-item ng-repeat="product in products" href="#/app/playlists/{{playlist.id}}">
-	        	{{product.title}}
-	      	</ion-item>
-	  	</ion-list>
-
+		<div class="col col-80 col-offset-10">
+			<ion-list>
+		     	<ion-item ng-repeat="product in products" href="#/app/playlists/{{playlist.id}}">
+		        	{{product.title}}
+		      	</ion-item>
+		  	</ion-list>
+	  	</div>
 	  
 
     </ion-content>

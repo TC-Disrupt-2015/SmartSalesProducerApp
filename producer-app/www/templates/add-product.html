@@ -1,0 +1,37 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Add Product</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeProductModal()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <form ng-submit="listProduct()">
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Product Title</span>
+          <input type="text" ng-model="productData.title">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Description</span>
+          <input type="password" ng-model="productData.description">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Description</span>
+          <input type="password" ng-model="productData.description">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Description</span>
+          <input type="password" ng-model="productData.description">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Description</span>
+          <input type="password" ng-model="productData.description">
+        </label>
+        <label class="item">
+          <button class="button button-full button-outline button-positive" type="submit">Add Product</button>
+        </label>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>

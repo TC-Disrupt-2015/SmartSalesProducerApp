@@ -41,7 +41,36 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('ProductsController', function($scope) {
+.controller('ProductsController', function($scope, $ionicModal, $timeout) {
+
+
+	$scope.productData = {};
+
+	$ionicModal.fromTemplateUrl('templates/add-product.html', {
+    	scope: $scope
+  	}).then(function(modal) {
+    	$scope.modal = modal;
+  	}); 	 
+
+  	$scope.closeProductModal = function() {
+  	  $scope.modal.hide();
+  	};
+
+  	// Open the login modal
+  	$scope.openProductModal = function() {
+  	  $scope.modal.show();
+  	};
+
+  	
+
+  	$scope.listProduct = function() {
+
+  	  // Simulate a login delay. Remove this and replace with your login
+  	  // code if using a login system
+  	  $timeout(function() {
+  	    $scope.closeProductModal();
+  	  }, 1000);
+  	};
 
 
   $scope.products = [
@@ -53,7 +82,7 @@ angular.module('starter.controllers', [])
     { title: 'Wine', id: 6 }
   ];
 
-  $scope.test = function(){
+  $scope.listProduct = function(){
     return "controller working";
   }
 
