@@ -9,10 +9,10 @@
 	  </div>
 	  <ion-content>
 	  	<div class="col col-80 col-offset-10">
-		    <form ng-submit="listProduct()">
+		    <form ng-submit="addProduct()">
 		      <div class="list">
 		        <label class="item item-input">
-		         	<span class="input-label">Product Title</span>
+		         	<span class="input-label">Product Name</span>
 		         	<input type="text" ng-model="productData.name">
 		        </label>
 		        <label class="item item-input">
@@ -21,11 +21,15 @@
 		        </label>
 		        <label class="item item-input">
 		         	<span class="input-label">Quantity</span>
-		          	<input type="text" ng-model="productData.units">
+		          	<input type="number" ng-model="productData.units">
 		        </label>
 		        <label class="item item-input">
 		         	<span class="input-label">Price</span>
-		         	<input type="text" ng-model="productData.price">
+		         	<input type="number" ng-model="productData.price">
+		        </label>
+		        <label class="item item-input">
+		         	<span class="input-label">Tags</span>
+		         	<input type="text" ng-model="productData.tags">
 		        </label>
 		        <div class="list">
 		        	<label class="item item-input item-select">
@@ -39,12 +43,12 @@
 		            	</select>
 		          	</label>
 		        </div>
-		        <label class="item item-input">
+		      <!--   <label class="item item-input">
 		         	<span class="input-label">Image</span>
 		         	<input type="text" ng-model="productImage">
-		        </label>
+		        </label> -->
 		        <label class="item">
-		          <button class="button button-full button-outline button-positive" type="submit">Add Product</button>
+		          <button ng-click="" class="button button-full button-outline button-positive" type="submit">Add Product</button>
 		        </label>
 		      </div>
 		    </form>

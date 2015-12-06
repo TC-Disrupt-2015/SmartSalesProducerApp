@@ -1,12 +1,14 @@
 var app = angular.module('starter.controllers')
 
-app.controller('ProductsController', function($scope, $ionicModal, $timeout, productsInterface, $cordovaCamera, $cordovaFileTransfer, $cordovaFile) {
+app.controller('ProductsController', function($scope, $ionicModal, $timeout, productsInterface, $cordovaCamera, $cordovaFileTransfer, $cordovaFile, SharedProductId, SharedUid, SharedName) {
 
 
 
 	$scope.productData = {};
 	$scope.images = [];
 	$scope.tags = ['food', 'halal', 'meat', 'pork', 'chicken', 'beef', 'lamb', 'vegitables', 'bread', 'baking', 'desert', 'alcohol', 'wine', 'beer', 'ale'];
+
+  $scope.hobbyistName =  SharedName.sharedName;
 
 	$ionicModal.fromTemplateUrl('templates/add-product.html', {
     	scope: $scope
@@ -23,9 +25,19 @@ app.controller('ProductsController', function($scope, $ionicModal, $timeout, pro
   	  $scope.modal.show();
   	};
 
-  	$scope.listProduct = function() { 
-  		console.log($scope.productData);
-  		// productsInterface.registerProduct($scope.productData, success, error)	
+  	$scope.addProduct = function() { 
+      $scope.productData.hid = SharedUid.sharedUid;
+  		console.log($scope.productData.hid);
+      //id 
+  		productsInterface.registerProduct($scope.productData, 
+                                        function(data){
+                                          console.log(data);
+                                          $scope.productId = data._id;
+                                          SharedProductId.sharedProductId = data._id;
+                                          $scope.uploadPhoto();
+                                        },
+                                        function(){}
+                                        );
 
 
 
@@ -63,33 +75,19 @@ app.controller('ProductsController', function($scope, $ionicModal, $timeout, pro
        	function copyFile(fileEntry) {
        		console.log(fileEntry);
        		var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
-       	 	var newName = makeid() + name;
+       	 	// var newName = $scope.productId + '/upload';
        	 	
        	 	window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(fileSystem2) {
-       	 		fileEntry.copyTo(fileSystem2,newName, onCopySuccess,fail);
+       	 		fileEntry.copyTo(fileSystem2,name, onCopySuccess,fail);
        	 	},fail);
        	}
 
-       	function upload() {
-   	        var options = {
-   	            fileKey: "avatar",
-   	            fileName: "image.png",
-   	            chunkedMode: false,
-   	            mimeType: "image/png"
-   	        };
-   	        $cordovaFileTransfer.upload("http://smartsales.heroku.com/product/:id/upload", "/android_asset/www/img/ionic.png", options).then(function(result) {
-   	            console.log("SUCCESS: " + JSON.stringify(result.response));
-   	        }, function(err) {
-   	            console.log("ERROR: " + JSON.stringify(err));
-   	        }, function (progress) {
-   	            // constant progress updates
-   	        });
-       	}
-       	// $cordovaFileTransfer.upload(server, filePath, options)
 
        	function onCopySuccess(entry) {
        		$scope.$apply(function () {
        	 	$scope.images.push(entry.nativeURL);
+            var trueOrigin = cordova.file.dataDirectory
+            upload(trueOrigin, entry.nativeURL);
        	 	});
        	}
        	 
@@ -97,16 +95,6 @@ app.controller('ProductsController', function($scope, $ionicModal, $timeout, pro
        	 	console.log("fail: " + error.code);
        	 }
 
-       	 function makeid() {
-       	 	var text = "";
-       	  	var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-       	  
-       	  	for (var i=0; i < 5; i++) {
-       	  		text += possible.charAt(Math.floor(Math.random() * possible.length));
-       	  	}
-       	  	return text;
-       	 }
-       	 
 
        }, function(err) {
          // error
@@ -116,27 +104,51 @@ app.controller('ProductsController', function($scope, $ionicModal, $timeout, pro
     }
 
 
-    $scope.urlForImage = function(imageName) {
-        var name = imageName.substr(imageName.lastIndexOf('/') + 1);
-        var trueOrigin = cordova.file.dataDirectory + name;
-        console.log(trueOrigin);
-        return trueOrigin;
-    }
+    // $scope.urlForImage = function(imageName) {
+    //     // var name = imageName.substr(imageName.lastIndexOf('/') + 1);
+    //     var trueOrigin = cordova.file.dataDirectory + name;
+    //     upload(trueOrigin);
+    //     return trueOrigin;
+    // }
 
-	function upload() {
-        var options = {
-            fileKey: "avatar",
-            fileName: "image.png",
-            chunkedMode: false,
-            mimeType: "image/png"
-        };
-        $cordovaFileTransfer.upload("http://smartsales.heroku.com/product/:id/upload", "/android_asset/www/img/ionic.png", options).then(function(result) {
-            console.log("SUCCESS: " + JSON.stringify(result.response));
+	function upload(imagePath, fileName) {
+		console.log(imagePath);
+		console.log("upload function");
+        var serverUrl = 'http://web.manthanhd.com:3000/product/'+$scope.productId+'/upload';
+		// we need product id to get these images
+        // var options = {
+        //     fileKey: "photo",
+        //     fileName: "image.png",
+        //     chunkedMode: false,
+        //     mimeType: "image/png"
+        // };
+
+        var uploadOptions = new FileUploadOptions();
+                uploadOptions.method = 'POST',
+                uploadOptions.fileKey = "photo";
+                uploadOptions.fileName = "ionic.png";
+                uploadOptions.mimeType = "image/png";
+                uploadOptions.chunkedMode = false;
+
+                
+
+        $cordovaFileTransfer.uploadFile(serverUrl, "www/img/ionic.png", uploadOptions).then(function(result) {
+                console.log("SUCCESS: " + JSON.stringify(result.response));
         }, function(err) {
             console.log("ERROR: " + JSON.stringify(err));
         }, function (progress) {
             // constant progress updates
         });
+
+
+        // $cordovaFileTransfer.upload(serverUrl, imagePath, options).then(function(result) {
+        //     	console.log("SUCCESS: " + JSON.stringify(result.response));
+        // }, function(err) {
+        //     console.log("ERROR: " + JSON.stringify(err));
+        // }, function (progress) {
+        //     // constant progress updates
+        // });
+
 	}
 
 

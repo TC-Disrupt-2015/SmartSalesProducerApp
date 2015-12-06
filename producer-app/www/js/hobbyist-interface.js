@@ -2,40 +2,78 @@ var server = angular.module('server')
 
 server.factory('hobbyistInterface', ['$http', function($http){
 
-	hobbiestInterface = {};
+	hobbyistInterface = {};
+	var timeoutLength = 10000;
 
-	// var baseUrl = 'http://smartsales.heroku.com/hobbyist',
-	// 	url,
-	// 	method,
-	// 	params = {};
-	// var request = {
-	// 	    method: method,
-	// 	    url: url,
-	// 	    timeout: timeoutLength,
-	// 	    headers: {
-	// 	        'Content-Type': 'application/x-www-form-urlencoded'
-	// 	    },
-	// 	    data: params
-	// 	};
+	var baseUrl = 'http://web.manthanhd.com:3000/hobbyist',
+		url,
+		method,
+		params = {};
+	
 
-	// hobbiestInterface.createHobbiest = function(data){
-	// 	url = baseUrl + '/register';
-	// 	method = 'POST';
-
-	// 	params = { 'name' : data.name,
-	// 			   'email' : data.email, 
-	// 			   'position': data.position}
-
-	// 	$http(request)
-	// 	.success(function(data, status, headers, config){
-	// 	    success(data, status, headers, config);
-	// 	})
-	// 	.error(function(data, status, headers, config){
-	// 	    error(data, status, headers, config);
-	// 	});
-
-	// }	
+	hobbyistInterface.createHobbyist = function(data, success, error){
+		url = baseUrl + '/register';
+		method = 'POST';
 
 
-	return hobbiestInterface;
+		params = { 'radius': 20,
+					'name' : data.name,
+				    'email' : data.email, 
+				    'location': {"lat": 51.511093,
+        						"lon": -0.033544 }
+				}
+
+		var request = {
+		    method: method,
+		    url: url,
+		    timeout: timeoutLength,
+		    headers: {
+		        'Content-Type': 'application/json'
+		    },
+	    	data: params
+		};		   
+
+		console.log(request);		   
+
+		$http(request)
+		.success(function(data, status, headers, config){
+			success(data, status, headers, config);
+		})
+		.error(function(data, status, headers, config){
+			error(data, status, headers, config);
+		});
+
+
+	}	
+
+	hobbyistInterface.login = function(data, success, error){
+		url = baseUrl + '/login/'+data;
+		method = 'GET';
+			var request = {
+			    method: method,
+			    url: url,
+			    timeout: timeoutLength,
+			    headers: {
+			        'Content-Type': 'application/json'
+			    },
+		    	data: params
+			};
+
+		console.log(request);
+
+		$http(request)
+		.success(function(data, status, headers, config){
+			success(data, status, headers, config);
+		})
+		.error(function(data, status, headers, config){
+			error(data, status, headers, config);
+		});	
+
+
+	}
+
+
+
+
+	return hobbyistInterface;
 }])
