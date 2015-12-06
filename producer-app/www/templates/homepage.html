@@ -3,8 +3,29 @@
 
 
       <div class="col col-80 col-offset-10">
-      
-           <div ng-repeat="allProducts()"></div>
+
+
+		<div>
+			CONTENT HERE
+
+		</div>
+
+       <div ng-repeat="product in allProducts()">
+       		<div class='row'>
+       			<div class='col'>
+       				<img src="" alt="">
+       			</div>
+       			<div class='col'>
+       				{{product.name}}
+       			</div>
+       			<div class='col'>
+       				{{product.description}}
+       			</div>
+       			<div class='col'>
+       				{{product.price}}
+       			</div>
+       		</div>
+       </div>
 
 
       </div>

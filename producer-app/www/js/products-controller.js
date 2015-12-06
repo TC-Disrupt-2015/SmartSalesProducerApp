@@ -2,6 +2,8 @@ var app = angular.module('starter.controllers')
 
 app.controller('ProductsController', function($scope, $ionicModal, $timeout, productsInterface, $cordovaCamera, $cordovaFileTransfer) {
 
+	// $cordovaCamera, $cordovaFileTransfer
+
 	$scope.productData = {};
 	$scope.productImage = {};
 	$scope.tags = ['food', 'halal', 'meat', 'pork', 'chicken', 'beef', 'lamb', 'vegitables', 'bread', 'baking', 'desert', 'alcohol', 'wine', 'beer', 'ale'];
@@ -23,7 +25,7 @@ app.controller('ProductsController', function($scope, $ionicModal, $timeout, pro
 
   	$scope.listProduct = function() { 
   		console.log($scope.productData);
-  		productsInterface.registerProduct($scope.productData, success, error)	
+  		// productsInterface.registerProduct($scope.productData, success, error)	
 
 
 
@@ -55,6 +57,12 @@ app.controller('ProductsController', function($scope, $ionicModal, $timeout, pro
   	  });
 
   	}, false);
+
+	// The Android Persistent storage location now defaults to "Internal". Please check this plugins README to see if you application needs any changes in its config.xml.
+	// If this is a new application no changes are required.
+	// If this is an update to an existing application that did not specify an "AndroidPersistentFileLocation" you may need to add:
+ //      "<preference name="AndroidPersistentFileLocation" value="Compatibility" />"
+	// to config.xml in order for the application to find previously stored files.
 
   	document.addEventListener('deviceready', function () {
 

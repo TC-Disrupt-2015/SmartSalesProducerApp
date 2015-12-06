@@ -1,7 +1,7 @@
 var app = angular.module('starter.controllers')
 
-app.controller('HobbyistController', function($scope, $ionicModal, $cordovaGeolocation){
-
+app.controller('HobbyistController', function($scope, $ionicModal){
+// , $cordovaGeolocation
 
 	$scope.hobbiestData = {};
 	var latLon = {'lat': '', 'lon': ''};
@@ -24,17 +24,17 @@ app.controller('HobbyistController', function($scope, $ionicModal, $cordovaGeolo
 	  $scope.modal.show();
 	};
 
-	document.addEventListener("deviceready", function () {
+	// document.addEventListener("deviceready", function () {
 		
-	  	  $cordovaGeolocation.getCurrentPosition(posOptions)
-	  	     .then(function (position) {
-	  	        latLon.lat  = position.coords.latitude
-	  	        latLon.lon = position.coords.longitude
-	  	      }, function(err) {
-	  	        // error
-	  	      });
+	//   	  $cordovaGeolocation.getCurrentPosition(posOptions)
+	//   	     .then(function (position) {
+	//   	        latLon.lat  = position.coords.latitude
+	//   	        latLon.lon = position.coords.longitude
+	//   	      }, function(err) {
+	//   	        // error
+	//   	      });
 	
-	}, false);
+	// }, false);
 
 
 

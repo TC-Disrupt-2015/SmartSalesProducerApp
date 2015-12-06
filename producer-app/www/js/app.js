@@ -71,5 +71,5 @@ angular.module('starter', ['ionic', 'starter.controllers', 'server', 'ngCordova'
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/homepage');
+  $urlRouterProvider.otherwise('/app/products');
 });
