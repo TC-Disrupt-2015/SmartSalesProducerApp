@@ -1,11 +1,11 @@
 var app = angular.module('starter.controllers')
 
-app.controller('ProductsController', function($scope, $ionicModal, $timeout, productsInterface, $cordovaCamera, $cordovaFileTransfer) {
+app.controller('ProductsController', function($scope, $ionicModal, $timeout, productsInterface, $cordovaCamera, $cordovaFileTransfer, $cordovaFile) {
 
-	// $cordovaCamera, $cordovaFileTransfer
+
 
 	$scope.productData = {};
-	$scope.productImage = {};
+	$scope.images = [];
 	$scope.tags = ['food', 'halal', 'meat', 'pork', 'chicken', 'beef', 'lamb', 'vegitables', 'bread', 'baking', 'desert', 'alcohol', 'wine', 'beer', 'ale'];
 
 	$ionicModal.fromTemplateUrl('templates/add-product.html', {
@@ -34,29 +34,111 @@ app.controller('ProductsController', function($scope, $ionicModal, $timeout, pro
   		}, 1000);
   	}
 
-  	document.addEventListener("deviceready", function () {
+  	
 
-  	  var options = {
-  	    quality: 50,
-  	    destinationType: Camera.DestinationType.DATA_URL,
-  	    sourceType: Camera.PictureSourceType.CAMERA,
-  	    allowEdit: true,
-  	    encodingType: Camera.EncodingType.JPEG,
-  	    targetWidth: 100,
-  	    targetHeight: 100,
-  	    popoverOptions: CameraPopoverOptions,
-  	    saveToPhotoAlbum: false,
-  	    correctOrientation:true
-  	  };
+    $scope.uploadPhoto = function(){
 
-  	  $cordovaCamera.getPicture(options).then(function(imageData) {
-  	    var image = document.getElementById('myImage');
-  	    image.src = "data:image/jpeg;base64," + imageData;
-  	  }, function(err) {
-  	    // error
-  	  });
+      var options = {
+       destinationType : Camera.DestinationType.FILE_URI,
+       sourceType : Camera.PictureSourceType.CAMERA, // Camera.PictureSourceType.PHOTOLIBRARY
+       allowEdit : false,
+       encodingType: Camera.EncodingType.JPEG,
+       popoverOptions: CameraPopoverOptions,
+       };
 
-  	}, false);
+       $cordovaCamera.getPicture(options).then(function(imageData) {
+       	console.log(imageData);
+
+       	onImageSuccess(imageData);
+       	
+       	function onImageSuccess(fileURI) {
+       		createFileEntry(fileURI);
+       	}
+       	
+       	function createFileEntry(fileURI) {
+       		console.log(fileURI);
+       		window.resolveLocalFileSystemURL(fileURI, copyFile, fail);
+       	}
+
+       	function copyFile(fileEntry) {
+       		console.log(fileEntry);
+       		var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
+       	 	var newName = makeid() + name;
+       	 	
+       	 	window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(fileSystem2) {
+       	 		fileEntry.copyTo(fileSystem2,newName, onCopySuccess,fail);
+       	 	},fail);
+       	}
+
+       	function upload() {
+   	        var options = {
+   	            fileKey: "avatar",
+   	            fileName: "image.png",
+   	            chunkedMode: false,
+   	            mimeType: "image/png"
+   	        };
+   	        $cordovaFileTransfer.upload("http://smartsales.heroku.com/product/:id/upload", "/android_asset/www/img/ionic.png", options).then(function(result) {
+   	            console.log("SUCCESS: " + JSON.stringify(result.response));
+   	        }, function(err) {
+   	            console.log("ERROR: " + JSON.stringify(err));
+   	        }, function (progress) {
+   	            // constant progress updates
+   	        });
+       	}
+       	// $cordovaFileTransfer.upload(server, filePath, options)
+
+       	function onCopySuccess(entry) {
+       		$scope.$apply(function () {
+       	 	$scope.images.push(entry.nativeURL);
+       	 	});
+       	}
+       	 
+       	 function fail(error) {
+       	 	console.log("fail: " + error.code);
+       	 }
+
+       	 function makeid() {
+       	 	var text = "";
+       	  	var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+       	  
+       	  	for (var i=0; i < 5; i++) {
+       	  		text += possible.charAt(Math.floor(Math.random() * possible.length));
+       	  	}
+       	  	return text;
+       	 }
+       	 
+
+       }, function(err) {
+         // error
+       });
+
+
+    }
+
+
+    $scope.urlForImage = function(imageName) {
+        var name = imageName.substr(imageName.lastIndexOf('/') + 1);
+        var trueOrigin = cordova.file.dataDirectory + name;
+        console.log(trueOrigin);
+        return trueOrigin;
+    }
+
+	function upload() {
+        var options = {
+            fileKey: "avatar",
+            fileName: "image.png",
+            chunkedMode: false,
+            mimeType: "image/png"
+        };
+        $cordovaFileTransfer.upload("http://smartsales.heroku.com/product/:id/upload", "/android_asset/www/img/ionic.png", options).then(function(result) {
+            console.log("SUCCESS: " + JSON.stringify(result.response));
+        }, function(err) {
+            console.log("ERROR: " + JSON.stringify(err));
+        }, function (progress) {
+            // constant progress updates
+        });
+	}
+
 
 	// The Android Persistent storage location now defaults to "Internal". Please check this plugins README to see if you application needs any changes in its config.xml.
 	// If this is a new application no changes are required.
@@ -64,18 +146,6 @@ app.controller('ProductsController', function($scope, $ionicModal, $timeout, pro
  //      "<preference name="AndroidPersistentFileLocation" value="Compatibility" />"
 	// to config.xml in order for the application to find previously stored files.
 
-  	document.addEventListener('deviceready', function () {
-
-  	    $cordovaFileTransfer.upload(server, filePath, options)
-  	      .then(function(result) {
-  	        // Success!
-  	      }, function(err) {
-  	        // Error
-  	      }, function (progress) {
-  	        // constant progress updates
-  	      });
-
-  	  }, false);
 
   $scope.products = [
     { title: 'Beer', id: 1 },

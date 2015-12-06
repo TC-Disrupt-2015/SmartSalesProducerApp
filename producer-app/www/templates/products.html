@@ -1,6 +1,15 @@
 <ion-view view-title="Smart Sales">
   <ion-content class="center">
 
+  		 <div class="col col-80 col-offset-10">
+  			<button class="button button-full button-outline button-positive" ng-click="uploadPhoto()">Upload Photo</button>
+
+  			<ion-scroll>
+  			   <img ng-repeat="image in images" ng-src="{{urlForImage(image)}}" height="100px"/>
+  			</ion-scroll>
+  		</div>
+  		
+
   		<div class="row">
   		  <div class="col col-80 col-offset-10">
   		  	<button ng-click="openProductModal()" class="button button-full button-outline button-positive">
@@ -16,6 +25,7 @@
 		      	</ion-item>
 		  	</ion-list>
 	  	</div>
+
 	  
 	  
     </ion-content>

@@ -1,7 +1,7 @@
 var app = angular.module('starter.controllers')
 
-app.controller('HobbyistController', function($scope, $ionicModal){
-// , $cordovaGeolocation
+app.controller('HobbyistController', function($scope, $ionicModal, $cordovaGeolocation){
+
 
 	$scope.hobbiestData = {};
 	var latLon = {'lat': '', 'lon': ''};
@@ -24,23 +24,52 @@ app.controller('HobbyistController', function($scope, $ionicModal){
 	  $scope.modal.show();
 	};
 
-	// document.addEventListener("deviceready", function () {
-		
-	//   	  $cordovaGeolocation.getCurrentPosition(posOptions)
-	//   	     .then(function (position) {
-	//   	        latLon.lat  = position.coords.latitude
-	//   	        latLon.lon = position.coords.longitude
-	//   	      }, function(err) {
-	//   	        // error
-	//   	      });
+	document.addEventListener("deviceready", function () {
+		console.log(posOptions);
+	  	  $cordovaGeolocation.getCurrentPosition(posOptions)
+	  	     .then(function (position) {
+	  	        $scope.latitude  = position.coords.latitude
+      			$scope.longitude = position.coords.longitude
+	  	      }, function(err) {
+	  	        // error
+	  	      });
+
+	  	   
 	
-	// }, false);
+	}, false);
 
 
+
+	$scope.getLocation = function(){
+		console.log("get location function");
+		console.log(posOptions);
+		$cordovaGeolocation.getCurrentPosition(posOptions)
+	  	     .then(function (position) {
+	  	        $scope.latitude  = position.coords.latitude
+      			$scope.longitude = position.coords.longitude
+	  	      }, function(err) {
+	  	        // error
+	  	      });
+
+	}
+
+	// console.log(lat, lon);
+
+	// var options = { enableHighAccuracy: true };
+	// navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
 
 	$scope.createHobbiest = function(){
 		console.log($scope.hobbiestData);
-		$scope.hobbiestData.position = latLon;
+		// $scope.hobbiestData.position
+		$cordovaGeolocation.getCurrentPosition(posOptions)
+	  	     .then(function (position) {
+	  	     	var lat  = position.coords.latitude
+      			var lon = position.coords.longitude
+	  	     }, function(err) {
+	  	        // error
+	  	     });
+	
+	  	console.log($scope.hobbiestData);     
 
 	}
 
