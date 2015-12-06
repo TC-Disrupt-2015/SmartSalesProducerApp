@@ -33,7 +33,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'server', 'ngCordova'
   })
 
   .state('app.search', {
-    url: '/hobbiest',
+    url: '/hobbyist',
     views: {
       'menuContent': {
         templateUrl: 'templates/hobbyist.html',
@@ -61,15 +61,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'server', 'ngCordova'
       }
     })
 
-  // .state('app.single', {
-  //   url: '/products/:productId',
-  //   views: {
-  //     'menuContent': {
-  //       templateUrl: 'templates/product.html',
-  //       controller: 'PlaylistCtrl'
-  //     }
-  //   }
-  // });
+
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/hobbyist.html');
+  $urlRouterProvider.otherwise('/app/hobbyist');
 });
