@@ -1,6 +1,6 @@
 var app = angular.module('starter.controllers')
 
-app.controller('HobbyistController', function($scope, $ionicModal, $timeout, $cordovaGeolocation, hobbyistInterface, SharedUid, SharedName){
+app.controller('HobbyistController', function($scope, $ionicModal, $timeout, $cordovaGeolocation, hobbyistInterface, SharedUid, SharedName, $location){
 
 
 	$scope.hobbyistData = {};
@@ -37,9 +37,15 @@ app.controller('HobbyistController', function($scope, $ionicModal, $timeout, $co
 										 });
 		 $timeout(function() {
       		$scope.closeModal();
+	 		$scope.changeRoute();
+
     	}, 1000);
 		// $scope.hobbiestData.position
 		
+	}
+
+	$scope.changeRoute = function(){
+		$location.path( "/app/products" );
 	}
 
 	$ionicModal.fromTemplateUrl('templates/login.html', {
@@ -50,11 +56,11 @@ app.controller('HobbyistController', function($scope, $ionicModal, $timeout, $co
 
 	// Triggered in the login modal to close it
 	$scope.closeLogin = function() {
-	  scope.loginModal.hide();
+	  $scope.loginModal.hide();
 	};
 
 	// Open the login modal
-	$scope.openLoginlogin = function() {
+	$scope.openLoginModal = function() {
 	  $scope.loginModal.show();
 	};
 
@@ -75,6 +81,7 @@ app.controller('HobbyistController', function($scope, $ionicModal, $timeout, $co
 	  // code if using a login system
 	  $timeout(function() {
 	    $scope.closeLogin();
+	    $scope.changeRoute();
 	  }, 1000);
 	};
 
