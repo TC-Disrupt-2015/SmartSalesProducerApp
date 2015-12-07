@@ -86,7 +86,9 @@ app.controller('ProductsController', function($scope, $ionicModal, $timeout, pro
        	function onCopySuccess(entry) {
        		$scope.$apply(function () {
        	 	$scope.images.push(entry.nativeURL);
-            var trueOrigin = cordova.file.dataDirectory
+          var name = entry.nativeURL.substr(entry.nativeURL.lastIndexOf('/') + 1);
+          $scope.image1 = cordova.file.dataDirectory + name;
+            var trueOrigin = cordova.file.dataDirectory + name;
             upload(trueOrigin, entry.nativeURL);
        	 	});
        	}
@@ -103,36 +105,26 @@ app.controller('ProductsController', function($scope, $ionicModal, $timeout, pro
 
     }
 
+    $scope.hideImage = false;
+    $scope.message = '';
 
-    // $scope.urlForImage = function(imageName) {
-    //     // var name = imageName.substr(imageName.lastIndexOf('/') + 1);
-    //     var trueOrigin = cordova.file.dataDirectory + name;
-    //     upload(trueOrigin);
-    //     return trueOrigin;
-    // }
-
-	function upload(imagePath, fileName) {
-		console.log(imagePath);
+	function upload(imagePath) {
+ 
 		console.log("upload function");
         var serverUrl = 'http://web.manthanhd.com:3000/product/'+$scope.productId+'/upload';
-		// we need product id to get these images
-        // var options = {
-        //     fileKey: "photo",
-        //     fileName: "image.png",
-        //     chunkedMode: false,
-        //     mimeType: "image/png"
-        // };
+	
+        var options = {
+            httpMethod: 'POST',
+            fileKey: "photo",
+            fileName: "ionic.png",
+            chunkedMode: false,
+            mimeType: "image/png"
+        };
 
-        var uploadOptions = new FileUploadOptions();
-                uploadOptions.method = 'POST',
-                uploadOptions.fileKey = "photo";
-                uploadOptions.fileName = "ionic.png";
-                uploadOptions.mimeType = "image/png";
-                uploadOptions.chunkedMode = false;
+        console.log(options);
 
-                
 
-        $cordovaFileTransfer.uploadFile(serverUrl, "www/img/ionic.png", uploadOptions).then(function(result) {
+        $cordovaFileTransfer.upload(imagePath, serverUrl, options).then(function(result) {
                 console.log("SUCCESS: " + JSON.stringify(result.response));
         }, function(err) {
             console.log("ERROR: " + JSON.stringify(err));
@@ -140,23 +132,12 @@ app.controller('ProductsController', function($scope, $ionicModal, $timeout, pro
             // constant progress updates
         });
 
-
-        // $cordovaFileTransfer.upload(serverUrl, imagePath, options).then(function(result) {
-        //     	console.log("SUCCESS: " + JSON.stringify(result.response));
-        // }, function(err) {
-        //     console.log("ERROR: " + JSON.stringify(err));
-        // }, function (progress) {
-        //     // constant progress updates
-        // });
-
+        $timeout(function() {
+          $scope.message = 'UPLOAD SUCCESS';
+          $scope.hideImage = true;
+        }, 3000);
+        
 	}
-
-
-	// The Android Persistent storage location now defaults to "Internal". Please check this plugins README to see if you application needs any changes in its config.xml.
-	// If this is a new application no changes are required.
-	// If this is an update to an existing application that did not specify an "AndroidPersistentFileLocation" you may need to add:
- //      "<preference name="AndroidPersistentFileLocation" value="Compatibility" />"
-	// to config.xml in order for the application to find previously stored files.
 
 
   $scope.products = [

@@ -1,18 +1,13 @@
 <ion-view view-title="Smart Sales">
   <ion-content class="center">
 
-	<div class="col">
-  		<h1>{{hobbyistName}}</h1>
-  	</div>
 
-  		<!--  <div class="col col-80 col-offset-10">
-  			<button class="button button-full button-outline button-positive" ng-click="uploadPhoto()">Upload Photo</button>
-
-  			<ion-scroll>
-  			   <img ng-repeat="image in images" ng-src="{{urlForImage(image)}}" height="100px"/>
-  			</ion-scroll>
-  		</div> -->
-  		
+      <div class="row">
+        <div class="col col-50 col-offset-25" style="text-align:center;">
+            <h1>{{hobbyistName}}</h1>
+        </div>
+      </div>
+   
 
   		<div class="row">
   		  <div class="col col-80 col-offset-10">
@@ -21,6 +16,18 @@
   		  	</button>
   		  </div>
   		</div>
+
+     <div class="col col-80 col-offset-10" ng-hide="hideImage">
+      <div class="row">
+        <div class="col">
+          <img ng-src="{{image1}}" height="80px"/>
+        </div>
+          <div class="col"  style="font-size:20px">
+            {{message}}
+          </div>
+        </div>
+     </div>
+  
 
 		<div class="col col-80 col-offset-10">
 			<ion-list>
